@@ -148,7 +148,8 @@ configure(allprojects) { project ->
 	}
 
 	repositories {
-		maven { url "https://repo.spring.io/libs-release" }
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        maven { url "https://repo.spring.io/libs-release" }
 		maven { url "https://repo.spring.io/snapshot" } // Reactor
 		maven { url "https://oss.jfrog.org/artifactory/libs-snapshot" } // RSocket
 		mavenLocal()
