@@ -1,9 +1,7 @@
 package com.karl.test.bean;
 
 import org.junit.Test;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.ClassPathResource;
-
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -17,9 +15,19 @@ public class BeanFactoryTest {
 
 	@Test
 	public void testSingleLoad() {
-		XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("bean/beanTestFactory.xml"));
-		MyTestBean myTestBean = (MyTestBean) xmlBeanFactory.getBean("myTestBean");
-		assertEquals("hello bean", myTestBean.getStr());
+//		/**
+//		 * 1 读取配置文件 beanFactoryTest.xml
+//		 * 2 根据beanFactoryTest.xml中的配置找到对应的类配置，并实例化
+//		 * 3 调用实例化后的实例
+//		 */
+//		XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("bean/beanTestFactory.xml"));
+//		MyTestBean myTestBean = (MyTestBean) xmlBeanFactory.getBean("myTestBean");
+//		assertEquals("hello bean", myTestBean.getStr());
+
+		AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(Appconfig.class);
+		MyTestBean bean = annotationConfigApplicationContext.getBean(MyTestBean.class);
+		assertEquals("hello bean", bean.getStr());
+
 	}
 
 }

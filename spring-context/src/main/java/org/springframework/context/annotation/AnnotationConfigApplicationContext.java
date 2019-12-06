@@ -28,6 +28,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
+ * 通过注解的方式初始化spring上下文/spring环境
+ *
  * Standalone application context, accepting annotated classes as input - in particular
  * {@link Configuration @Configuration}-annotated classes, but also plain
  * {@link org.springframework.stereotype.Component @Component} types and JSR-330 compliant
@@ -63,6 +65,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
+		// 同时还会触发父类 AbstractApplicationContext 的无参构造来初始化BeanFactory
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
@@ -84,8 +87,14 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * e.g. {@link Configuration @Configuration} classes
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
+		// 01 调用该类的无参构造方法
+		//需要注意的点: 当我们调用类的构造方法的时候首先会调用父类的构造方法
+		//因为我们这里调用了该类的无参构造，首先会调用父类的无参构造
+		//在父类的无参构造方法中初始化了BeanFactory
 		this();
+		// 02
 		register(annotatedClasses);
+		// 03
 		refresh();
 	}
 
