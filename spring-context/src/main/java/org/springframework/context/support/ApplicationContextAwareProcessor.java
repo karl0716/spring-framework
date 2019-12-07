@@ -40,7 +40,8 @@ import org.springframework.util.StringValueResolver;
  * EmbeddedValueResolverAware、ResourceLoaderAware、ApplicationEventPublisherAware、MessageSourceAware和/或ApplicationContext - ware接口的bean。
  * 实现的接口按照上面提到的顺序被满足。
  * 应用程序上下文将自动将其注册到它们的底层bean工厂。应用程序不直接使用它。
- *
+ * <p>
+ * <p>
  * {@link org.springframework.beans.factory.config.BeanPostProcessor}
  * implementation that passes the ApplicationContext to beans that
  * implement the {@link EnvironmentAware}, {@link EmbeddedValueResolverAware},
@@ -55,7 +56,6 @@ import org.springframework.util.StringValueResolver;
  * @author Juergen Hoeller
  * @author Costin Leau
  * @author Chris Beams
- * @since 10.10.2003
  * @see org.springframework.context.EnvironmentAware
  * @see org.springframework.context.EmbeddedValueResolverAware
  * @see org.springframework.context.ResourceLoaderAware
@@ -63,6 +63,7 @@ import org.springframework.util.StringValueResolver;
  * @see org.springframework.context.MessageSourceAware
  * @see org.springframework.context.ApplicationContextAware
  * @see org.springframework.context.support.AbstractApplicationContext#refresh()
+ * @since 10.10.2003
  */
 class ApplicationContextAwareProcessor implements BeanPostProcessor {
 
@@ -79,7 +80,9 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 		this.embeddedValueResolver = new EmbeddedValueResolver(applicationContext.getBeanFactory());
 	}
 
-
+	/**
+	 * bean 初始化之前的动作
+	 */
 	@Override
 	@Nullable
 	public Object postProcessBeforeInitialization(final Object bean, String beanName) throws BeansException {
@@ -97,8 +100,7 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 				invokeAwareInterfaces(bean);
 				return null;
 			}, acc);
-		}
-		else {
+		} else {
 			invokeAwareInterfaces(bean);
 		}
 
