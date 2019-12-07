@@ -249,18 +249,51 @@ public class AnnotatedBeanDefinitionReader {
 	 */
 	<T> void doRegisterBean(Class<T> annotatedClass, @Nullable Supplier<T> instanceSupplier, @Nullable String name,
 			@Nullable Class<? extends Annotation>[] qualifiers, BeanDefinitionCustomizer... definitionCustomizers) {
-
+		/**
+		 * 根据指定的bean 创建一个 AnnotatedGenericBeanDefinition 对象
+		 * 这个 AnnotatedGenericBeanDefinition 对象可以理解为一个数据结构
+		 * AnnotatedGenericBeanDefinition 包含了类的其他信息 比如一些元信息
+		 * scope lazy等
+		 */
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(annotatedClass);
+
+
+		/**
+		 * 判断一个类是否跳过解析
+		 * 通过代码可以知道spring 判断是否跳过解析主要是判断类有没有注解
+		 */
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}
-
+		/**
+		 * 暂时还不知道
+		 */
 		abd.setInstanceSupplier(instanceSupplier);
+
+		/**
+		 * 得到类的作用域
+		 */
 		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
 		abd.setScope(scopeMetadata.getScopeName());
+		/**
+		 * 获取类的名字
+		 */
 		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
 
+		/**
+		 * 处理通用的注解
+		 *
+		 */
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
+
+		/**
+		 * 处理spring bean的别名
+		 * 如果在向容器注册注解Bean定义时，使用了额外的限定符（Qualifier,primary,lazy）注解则借币
+		 * 关于Qualifier 和 primary 主要涉及到spring的自动装配
+		 * 这里需要注意点:
+		 *
+		 */
+
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
 				if (Primary.class == qualifier) {
@@ -277,9 +310,21 @@ public class AnnotatedBeanDefinitionReader {
 		for (BeanDefinitionCustomizer customizer : definitionCustomizers) {
 			customizer.customize(abd);
 		}
-
+		/**
+		 * BeanDefinitionHolder
+		 * 可以理解为map key BeanDefinition  value beanName
+		 *
+		 */
 		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
+		/**
+		 * ScopedProxyMode 这个知识点可以结合spring mvc
+		 *
+		 *
+		 */
 		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+		/**
+		 * this.registry BeanDefinitionRegistry bean的注册 可以理解为将bean放到spring容器中
+		 */
 		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 	}
 

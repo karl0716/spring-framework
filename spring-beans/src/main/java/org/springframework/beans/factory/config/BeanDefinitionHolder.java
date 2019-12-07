@@ -24,6 +24,12 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ *
+ * javadoc翻译:
+ * 包含名称和别名的bean定义的Holder。可以注册为内部bean的占位符。
+ * 还可以用于内部bean定义的编程注册。如果您不关心BeanNameAware之类的，
+ * 注册RootBeanDefinition或ChildBeanDefinition就足够了。
+ *
  * Holder for a BeanDefinition with name and aliases.
  * Can be registered as a placeholder for an inner bean.
  *

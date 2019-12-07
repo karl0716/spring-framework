@@ -515,6 +515,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	public void refresh() throws BeansException, IllegalStateException {
 		// 首先是一个同步的方法
 		synchronized (this.startupShutdownMonitor) {
+			// 准备工作
+			// 包括设置启动时间,是否激活标志位,初始化属性源(property source)配置
 			// Prepare this context for refreshing.
 			prepareRefresh();
 
@@ -598,9 +600,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			}
 		}
 
+		//空实现
 		// Initialize any placeholder property sources in the context environment.
 		initPropertySources();
 
+		// 得到系统环境的参数
 		// Validate that all properties marked as required are resolvable:
 		// see ConfigurablePropertyResolver#setRequiredProperties
 		getEnvironment().validateRequiredProperties();
@@ -640,19 +644,29 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return getBeanFactory();
 	}
 
+
 	/**
+	 * 对BeanFactory 配置其标准特征，比如上下文的加载器ClassLoader和post-processors 回调
 	 * Configure the factory's standard context characteristics,
 	 * such as the context's ClassLoader and post-processors.
 	 * @param beanFactory the BeanFactory to configure
 	 */
 	protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
 		// Tell the internal bean factory to use the context's class loader etc.
+		//配置ClassLoader信息
 		beanFactory.setBeanClassLoader(getClassLoader());
+		// bean的表达式解析
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
+		//
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
 		// Configure the bean factory with context callbacks.
+		// 非常重要
+		// 知识点: 后置处理器
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
+
+
+
 		beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 		beanFactory.ignoreDependencyInterface(EmbeddedValueResolverAware.class);
 		beanFactory.ignoreDependencyInterface(ResourceLoaderAware.class);

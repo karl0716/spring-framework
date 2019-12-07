@@ -1,8 +1,6 @@
 package com.karl.test.bean;
 
-import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import static junit.framework.TestCase.assertEquals;
 
 /**
  * 描述:  Bean 工厂 测试类
@@ -12,22 +10,27 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class BeanFactoryTest {
 
+	public static void main(String[] args) {
+		// 需要注意的点: 我们要想了解spring bean 加载的过程
+		// 首先我们要对 BeanDefinition 进行了解
 
-	@Test
-	public void testSingleLoad() {
-//		/**
-//		 * 1 读取配置文件 beanFactoryTest.xml
-//		 * 2 根据beanFactoryTest.xml中的配置找到对应的类配置，并实例化
-//		 * 3 调用实例化后的实例
-//		 */
-//		XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("bean/beanTestFactory.xml"));
-//		MyTestBean myTestBean = (MyTestBean) xmlBeanFactory.getBean("myTestBean");
-//		assertEquals("hello bean", myTestBean.getStr());
-
+		//01 场景1 直接加载配置文件
 		AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(Appconfig.class);
 		MyTestBean bean = annotationConfigApplicationContext.getBean(MyTestBean.class);
-		assertEquals("hello bean", bean.getStr());
+		System.out.println("bean = " + bean);
+
+		//02 场景2 将场景1的分开执行也能达到预期效果
+		AnnotationConfigApplicationContext annotationConfigApplicationContext2 = new AnnotationConfigApplicationContext();
+		annotationConfigApplicationContext2.register(Appconfig.class);
+		//初始化spring的环境
+		annotationConfigApplicationContext2.refresh();
+		MyTestBean bean2 = annotationConfigApplicationContext2.getBean(MyTestBean.class);
+		System.out.println("bean = " + bean2);
+
+		//03
+
+
+
 
 	}
-
 }

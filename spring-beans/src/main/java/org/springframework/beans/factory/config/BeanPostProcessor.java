@@ -20,6 +20,19 @@ import org.springframework.beans.BeansException;
 import org.springframework.lang.Nullable;
 
 /**
+ * javadoc 翻译
+ * 工厂钩子，允许自定义修改新的bean实例，例如检查标记接口或用代理包装它们。
+ * ApplicationContexts可以自动检测bean后处理器bean定义中的bean，并将它们应用于随后创建的任何bean。普通bean工厂允许对后处理程序进行编程式注册，适用于通过该工厂创建的所有bean。
+ * 通常，通过标记接口或类似方式填充bean的后处理器将实现postprocessbeforeinitialize，而使用代理包装bean的后处理器通常将实现postprocessafterinitial。
+ *
+ * 白话文理解:
+ * BeanPostProcessor 是spring框架扩展类的处理器
+ * 通过实现BeanPostProcessor接口,程序员就可插手bean实例化过程,从而减轻了beanFactory的负担
+ * 值得说明的这个接口可以设置多个(还可以通过实现其他接口进行实现类的扩展功能)，会形成一个列表，然后依次执行
+ * 比如Aop就是在bean实例后期间 将切面逻辑植入bean实例中
+ * aop也是通过BeanPostProcessor和IOC关联
+ *
+ *
  * Factory hook that allows for custom modification of new bean instances,
  * e.g. checking for marker interfaces or wrapping them with proxies.
  *

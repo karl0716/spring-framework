@@ -22,6 +22,25 @@ import org.springframework.core.AttributeAccessor;
 import org.springframework.lang.Nullable;
 
 /**
+ * javadoc翻译：
+ * bean定义描述了一个bean实例，它具有属性值、构造函数参数值和由具体实现提供的进一步信息。
+ * 这只是一个最小的接口:主要目的是允许BeanFactoryPostProcessor内省和修改属性值和其他bean元数据。
+ *
+ * 白话理解:
+ * 接口表示一种能力，实现了一个接口，即拥有一种能力。
+ * BeanDefinition与Bean的关系, 就好比类与对象的关系.
+ * 类在spring的数据结构就是BeanDefinition.根据BeanDefinition得到的对象就是我们需要的Bean.
+ * java 是面向对象编程的，对象在具体表现为class文件
+ * 而在spring 容器中 bean 就是 指的是 BeanDefinition
+ *
+ * bean 的定义有四种
+ * @Bean 标签
+ * 注解 @Component
+ * xml 定义的bean
+ * spring 内部bean
+ *
+ *
+ *
  * A BeanDefinition describes a bean instance, which has property values,
  * constructor argument values, and further information supplied by
  * concrete implementations.
