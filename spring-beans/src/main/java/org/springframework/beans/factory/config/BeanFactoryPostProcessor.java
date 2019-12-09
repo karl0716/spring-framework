@@ -19,6 +19,15 @@ package org.springframework.beans.factory.config;
 import org.springframework.beans.BeansException;
 
 /**
+ *
+ * javadoc翻译:
+ * 允许自定义修改应用程序上下文的bean定义，调整上下文的底层bean工厂的bean属性值。
+ * 应用程序上下文可以自动检测bean定义中的BeanFactoryPostProcessor bean，并在创建任何其他bean之前应用它们。
+ * 对于针对覆盖应用程序上下文中配置的bean属性的系统管理员的自定义配置文件非常有用。
+ * 有关解决此类配置需求的开箱即用解决方案，请参见PropertyResourceConfigurer及其具体实现。
+ * BeanFactoryPostProcessor可以与bean定义交互和修改bean定义，但不能与bean实例交互。
+ * 这样做可能会导致过早实例化bean，破坏容器并导致意外的副作用。如果需要bean实例交互，则考虑实现BeanPostProcessor。
+ *
  * Allows for custom modification of an application context's bean definitions,
  * adapting the bean property values of the context's underlying bean factory.
  *

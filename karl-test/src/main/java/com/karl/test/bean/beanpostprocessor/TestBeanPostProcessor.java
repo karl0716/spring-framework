@@ -19,7 +19,7 @@ public class TestBeanPostProcessor implements BeanPostProcessor {
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (beanName.equalsIgnoreCase("MyTestBean")) {
-			System.out.println("自定义的 postProcessBeforeInitialization 执行了");
+//			System.out.println("自定义的 postProcessBeforeInitialization 执行了");
 		}
 		/**
 		 * 接下来可以对bean 做处理
@@ -34,7 +34,7 @@ public class TestBeanPostProcessor implements BeanPostProcessor {
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 		if (beanName.equalsIgnoreCase("MyTestBean")) {
-			System.out.println("自定义的 postProcessAfterInitialization 执行了");
+//			System.out.println("自定义的 postProcessAfterInitialization 执行了");
 		}
 		return bean;
 	}

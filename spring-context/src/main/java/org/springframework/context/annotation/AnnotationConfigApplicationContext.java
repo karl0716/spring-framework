@@ -69,12 +69,13 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
+		System.out.println("调用了自身的构造方法");
 		// BeanDefinition
 		// AnnotatedBeanDefinition
 		// AnnotatedBeanDefinitionReader
 		// 暂时先理解 读取被注解的bean
 		this.reader = new AnnotatedBeanDefinitionReader(this);
-		// 扫描
+		// 扫描 扫描我们的bd  -> 扫描一个类并且转换成bd
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 

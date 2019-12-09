@@ -111,6 +111,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 	 * @see #refresh
 	 */
 	public GenericApplicationContext() {
+		System.out.println("调用了父类的构造方法");
 		this.beanFactory = new DefaultListableBeanFactory();
 	}
 
